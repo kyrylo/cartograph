@@ -25,7 +25,7 @@ module Cartograph
       scoped_properties.each_with_object({}) do |property, mapped|
         begin
           mapped[property.key] = property.value_for(object, scope)
-        rescue NoMethodError => e
+        rescue NoMethodError
           raise ArgumentError, "#{object} does not respond to #{property.name}, so we can't map it"
         end
       end

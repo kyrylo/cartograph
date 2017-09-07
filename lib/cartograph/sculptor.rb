@@ -5,6 +5,7 @@ module Cartograph
     def initialize(object, map)
       @object = object
       @map = map
+      @sculpted_object = nil
     end
 
     def properties
