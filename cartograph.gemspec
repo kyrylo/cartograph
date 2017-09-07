@@ -6,11 +6,11 @@ require 'cartograph/version'
 Gem::Specification.new do |spec|
   spec.name          = "cartograph"
   spec.version       = Cartograph::VERSION
-  spec.authors       = ["Robert Ross"]
-  spec.email         = ["engineering@digitalocean.com", "rross@digitalocean.com", "ivan@digitalocean.com"]
+  spec.authors       = ["Robert Ross", "Kyrylo Silin"]
+  spec.email         = ["silin@kyrylo.org"]
   spec.summary       = %q{Cartograph makes it easy to generate and convert JSON. It's intention is to be used for API clients.}
   spec.description   = %q{Cartograph makes it easy to generate and convert JSON. It's intention is to be used for API clients.}
-  spec.homepage      = "https://github.com/digitaloceancloud/cartograph"
+  spec.homepage      = "https://github.com/kyrylo/cartograph"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

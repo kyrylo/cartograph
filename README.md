@@ -2,7 +2,7 @@
 
 A Serialization / Deserialization library.
 
-[![Build Status](https://travis-ci.org/digitalocean/cartograph.svg?branch=master)](https://travis-ci.org/digitalocean/cartograph)
+[![Build Status](https://travis-ci.org/kyrylo/cartograph.svg?branch=master)](https://travis-ci.org/kyrylo/cartograph)
 
 ## Installation
 
@@ -204,7 +204,7 @@ end
 
 ## Contributing
 
-1. Fork it ( https://github.com/digitaloceancloud/cartograph/fork )
+1. Fork it ( https://github.com/kyrylo/cartograph/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
