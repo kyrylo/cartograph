@@ -1,22 +1,22 @@
 require 'spec_helper'
 
-describe Kartograph::DSL do
+describe Cartograph::DSL do
   describe 'Inclusion' do
-    it 'gives you a class method for .kartograph' do
+    it 'gives you a class method for .cartograph' do
       klass = Class.new
-      expect { klass.send(:include, described_class) }.to change { klass.respond_to?(:kartograph) }.to(true)
+      expect { klass.send(:include, described_class) }.to change { klass.respond_to?(:cartograph) }.to(true)
     end
   end
 
-  describe '.kartograph' do
-    subject(:mapping) { Class.new { include Kartograph::DSL } }
+  describe '.cartograph' do
+    subject(:mapping) { Class.new { include Cartograph::DSL } }
 
-    it 'yields a Kartograph::Map instance' do
-      expect {|b| mapping.kartograph(&b) }.to yield_with_args(Kartograph::Map.new)
+    it 'yields a Cartograph::Map instance' do
+      expect {|b| mapping.cartograph(&b) }.to yield_with_args(Cartograph::Map.new)
     end
 
     it 'returns the map instance' do
-      expect(mapping.kartograph).to be_kind_of(Kartograph::Map)
+      expect(mapping.cartograph).to be_kind_of(Cartograph::Map)
     end
   end
 
@@ -30,7 +30,7 @@ describe Kartograph::DSL do
 
     context 'with a root key for the scope' do
       it 'returns the hash with the root key' do
-        mapped.kartograph do
+        mapped.cartograph do
           root_key singular: 'user', scopes: [:create]
         end
         hash = mapped.hash_for(:create, object)
@@ -72,7 +72,7 @@ describe Kartograph::DSL do
       it "includes the root key" do
         root_key_name = "the_root_key"
 
-        mapped.kartograph do
+        mapped.cartograph do
           root_key plural: root_key_name, scopes: [:read]
         end
 
@@ -102,7 +102,7 @@ describe Kartograph::DSL do
 
     context 'with a root key for the scope' do
       it 'returns the json with the root key' do
-        mapped.kartograph do
+        mapped.cartograph do
           root_key singular: 'user', scopes: [:create]
         end
         json = mapped.representation_for(:create, object)
@@ -145,7 +145,7 @@ describe Kartograph::DSL do
       it "includes the root key" do
         root_key_name = "the_root_key"
 
-        mapped.kartograph do
+        mapped.cartograph do
           root_key plural: root_key_name, scopes: [:read]
         end
 
@@ -178,7 +178,7 @@ describe Kartograph::DSL do
       let(:json) { { test: super() } }
 
       before do
-        mapped.kartograph do
+        mapped.cartograph do
           root_key singular: 'test', scopes: [:read]
         end
       end
@@ -233,7 +233,7 @@ describe Kartograph::DSL do
       let(:json) { { users: super() } }
 
       before do
-        mapped.kartograph do
+        mapped.cartograph do
           root_key plural: 'users', scopes: [:read]
         end
       end

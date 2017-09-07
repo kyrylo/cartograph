@@ -1,4 +1,4 @@
-module Kartograph
+module Cartograph
   class Property
     attr_reader :name, :options
     attr_accessor :map
@@ -10,7 +10,7 @@ module Kartograph
       if mapped_class = options[:include]
         # Perform a safe duplication into our properties map
         # This allows the user to define more attributes on the map should they need to
-        @map = mapped_class.kartograph.dup
+        @map = mapped_class.cartograph.dup
       end
 
       if block_given?

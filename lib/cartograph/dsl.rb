@@ -1,18 +1,18 @@
-module Kartograph
+module Cartograph
   module DSL
     def self.included(base)
       base.extend ClassMethods
     end
 
     module ClassMethods
-      def kartograph(&block)
-        @kartograph_map ||= Map.new
+      def cartograph(&block)
+        @cartograph_map ||= Map.new
 
         if block_given?
-          block.arity > 0 ? block.call(@kartograph_map) : @kartograph_map.instance_eval(&block)
+          block.arity > 0 ? block.call(@cartograph_map) : @cartograph_map.instance_eval(&block)
         end
 
-        @kartograph_map
+        @cartograph_map
       end
 
       # Returns a hash representation of the object based on the mapping
@@ -21,7 +21,7 @@ module Kartograph
       # @param object the object to be mapped
       # @return [Hash, Array]
       def hash_for(scope, object)
-        drawn_object = Artist.new(object, @kartograph_map).draw(scope)
+        drawn_object = Artist.new(object, @cartograph_map).draw(scope)
         prepend_root_key(scope, :singular, drawn_object)
       end
 
@@ -32,21 +32,21 @@ module Kartograph
       # @return [Hash, Array]
       def hash_collection_for(scope, objects)
         drawn_objects = objects.map do |object|
-          Artist.new(object, @kartograph_map).draw(scope)
+          Artist.new(object, @cartograph_map).draw(scope)
         end
 
         prepend_root_key(scope, :plural, drawn_objects)
       end
 
-      def representation_for(scope, object, dumper = Kartograph.default_dumper)
+      def representation_for(scope, object, dumper = Cartograph.default_dumper)
         dumper.dump(hash_for(scope, object))
       end
 
-      def represent_collection_for(scope, objects, dumper = Kartograph.default_dumper)
+      def represent_collection_for(scope, objects, dumper = Cartograph.default_dumper)
         dumper.dump(hash_collection_for(scope, objects))
       end
 
-      def extract_single(content, scope, loader = Kartograph.default_loader)
+      def extract_single(content, scope, loader = Cartograph.default_loader)
         loaded = loader.load(content)
 
         retrieve_root_key(scope, :singular) do |root_key|
@@ -54,10 +54,10 @@ module Kartograph
           loaded = loaded[root_key]
         end
 
-        Sculptor.new(loaded, @kartograph_map).sculpt(scope)
+        Sculptor.new(loaded, @cartograph_map).sculpt(scope)
       end
 
-      def extract_into_object(object, content, scope, loader = Kartograph.default_loader)
+      def extract_into_object(object, content, scope, loader = Cartograph.default_loader)
         loaded = loader.load(content)
 
         retrieve_root_key(scope, :singular) do |root_key|
@@ -65,12 +65,12 @@ module Kartograph
           loaded = loaded[root_key]
         end
 
-        sculptor = Sculptor.new(loaded, @kartograph_map)
+        sculptor = Sculptor.new(loaded, @cartograph_map)
         sculptor.sculpted_object = object
         sculptor.sculpt(scope)
       end
 
-      def extract_collection(content, scope, loader = Kartograph.default_loader)
+      def extract_collection(content, scope, loader = Cartograph.default_loader)
         loaded = loader.load(content)
 
         retrieve_root_key(scope, :plural) do |root_key|
@@ -79,7 +79,7 @@ module Kartograph
         end
 
         loaded.map do |object|
-          Sculptor.new(object, @kartograph_map).sculpt(scope)
+          Sculptor.new(object, @cartograph_map).sculpt(scope)
         end
       end
 
@@ -94,7 +94,7 @@ module Kartograph
       end
 
       def retrieve_root_key(scope, type, &block)
-        if root_key = @kartograph_map.root_key_for(scope, type)
+        if root_key = @cartograph_map.root_key_for(scope, type)
           yield root_key
         end
       end

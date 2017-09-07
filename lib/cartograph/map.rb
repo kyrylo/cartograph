@@ -1,6 +1,6 @@
 require 'thread'
 
-module Kartograph
+module Cartograph
   class Map
     def initialize
       @scope_mutex = Mutex.new
@@ -47,12 +47,12 @@ module Kartograph
 
     def cache(object = nil)
       @cache = object unless object.nil?
-      @cache.nil? ? Kartograph.default_cache : @cache
+      @cache.nil? ? Cartograph.default_cache : @cache
     end
 
     def cache_key(&calculator)
       @cache_calculator = calculator if block_given?
-      @cache_calculator.nil? ? Kartograph.default_cache_key : @cache_calculator
+      @cache_calculator.nil? ? Cartograph.default_cache_key : @cache_calculator
     end
 
     def root_key_for(scope, type)
@@ -64,7 +64,7 @@ module Kartograph
     end
 
     def dup
-      Kartograph::Map.new.tap do |map|
+      Cartograph::Map.new.tap do |map|
         self.properties.each do |property|
           map.properties << property.dup
         end

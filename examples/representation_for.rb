@@ -3,9 +3,9 @@ class Domain
 end
 
 class DomainMapper
-  include Kartograph::DSL
+  include Cartograph::DSL
 
-  kartograph do
+  cartograph do
     mapping Domain
     root_key singular: 'domain', plural: 'domains', scopes: [:read]
 

@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe Kartograph::Artist do
-  let(:map) { Kartograph::Map.new }
+describe Cartograph::Artist do
+  let(:map) { Cartograph::Map.new }
   let(:properties) { map.properties }
 
   describe '#initialize' do
     it 'initializes with an object and a map' do
       object     = double('object', name: 'hello')
-      properties << Kartograph::Property.new(:name)
+      properties << Cartograph::Property.new(:name)
 
-      artist = Kartograph::Artist.new(object, map)
+      artist = Cartograph::Artist.new(object, map)
 
       expect(artist.object).to be(object)
       expect(artist.map).to be(map)
@@ -19,9 +19,9 @@ describe Kartograph::Artist do
   describe '#draw' do
     it 'returns a hash of mapped properties' do
       object     = double('object', hello: 'world')
-      properties << Kartograph::Property.new(:hello)
+      properties << Cartograph::Property.new(:hello)
 
-      artist = Kartograph::Artist.new(object, map)
+      artist = Cartograph::Artist.new(object, map)
       masterpiece = artist.draw
 
       expect(masterpiece).to include('hello' => 'world')
@@ -30,8 +30,8 @@ describe Kartograph::Artist do
     it 'raises for a property that the object does not have' do
       class TestArtistNoMethod; end
       object = TestArtistNoMethod.new
-      properties << Kartograph::Property.new(:bunk)
-      artist = Kartograph::Artist.new(object, map)
+      properties << Cartograph::Property.new(:bunk)
+      artist = Cartograph::Artist.new(object, map)
 
       expect { artist.draw }.to raise_error(ArgumentError).with_message("#{object} does not respond to bunk, so we can't map it")
     end
@@ -39,9 +39,9 @@ describe Kartograph::Artist do
     context 'for a property with a key set on it' do
       it 'returns the hash with the key set correctly' do
         object     = double('object', hello: 'world')
-        properties << Kartograph::Property.new(:hello, key: :hola)
+        properties << Cartograph::Property.new(:hello, key: :hola)
 
-        artist = Kartograph::Artist.new(object, map)
+        artist = Cartograph::Artist.new(object, map)
         masterpiece = artist.draw
 
         expect(masterpiece).to include('hola' => 'world')
@@ -51,10 +51,10 @@ describe Kartograph::Artist do
     context 'for filtered drawing' do
       it 'only returns the scoped properties' do
         object     = double('object', hello: 'world', foo: 'bar')
-        properties << Kartograph::Property.new(:hello, scopes: [:create, :read])
-        properties << Kartograph::Property.new(:foo, scopes: [:create])
+        properties << Cartograph::Property.new(:hello, scopes: [:create, :read])
+        properties << Cartograph::Property.new(:foo, scopes: [:create])
 
-        artist = Kartograph::Artist.new(object, map)
+        artist = Cartograph::Artist.new(object, map)
         masterpiece = artist.draw(:read)
 
         expect(masterpiece).to eq('hello' => 'world')
@@ -65,14 +65,14 @@ describe Kartograph::Artist do
           child = double('child', hello: 'world', foo: 'bunk')
           object = double('object', child: child)
 
-          root_property = Kartograph::Property.new(:child, scopes: [:create, :read]) do
+          root_property = Cartograph::Property.new(:child, scopes: [:create, :read]) do
             property :hello, scopes: [:create]
             property :foo, scopes: [:read]
           end
 
           properties << root_property
 
-          artist = Kartograph::Artist.new(object, map)
+          artist = Cartograph::Artist.new(object, map)
           masterpiece = artist.draw(:read)
 
           expect(masterpiece).to eq('child' => { 'foo' => child.foo })
@@ -89,7 +89,7 @@ describe Kartograph::Artist do
         map.cache_key { |obj, scope| obj.cache_key }
         map.property :foo
 
-        artist = Kartograph::Artist.new(object, map)
+        artist = Cartograph::Artist.new(object, map)
         masterpiece = artist.draw
 
         expect(masterpiece).to eq(cacher.fetch)
@@ -105,7 +105,7 @@ describe Kartograph::Artist do
 
         map.property :foo, scopes: [:read]
 
-        artist = Kartograph::Artist.new(object, map)
+        artist = Cartograph::Artist.new(object, map)
         masterpiece = artist.draw(:read)
 
         expect(called).to have_received(:call).with(object, :read)

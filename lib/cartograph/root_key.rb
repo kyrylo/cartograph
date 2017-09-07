@@ -1,4 +1,4 @@
-module Kartograph
+module Cartograph
   class RootKey
     attr_reader :options
 

@@ -1,4 +1,4 @@
-module Kartograph
+module Cartograph
   class Artist
     attr_reader :object, :map
 

@@ -2,9 +2,9 @@ shared_context "DSL Objects" do
   let(:object) { double('object', id: 1066, name: 'Bruce (the dude from Finding Nemo)') }
   let(:mapped) do
     Class.new do
-      include Kartograph::DSL
+      include Cartograph::DSL
 
-      kartograph do
+      cartograph do
         mapping DummyUser
 
         property :id, scopes: [:read]

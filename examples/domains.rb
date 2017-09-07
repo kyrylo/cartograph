@@ -1,4 +1,4 @@
-require 'kartograph'
+require 'cartograph'
 
 json = '{
   "domains": [
@@ -22,9 +22,9 @@ class MetaInformation
 end
 
 class DomainMapper
-  include Kartograph::DSL
+  include Cartograph::DSL
 
-  kartograph do
+  cartograph do
     mapping Domain
     root_key singular: 'domain', plural: 'domains', scopes: [:read]
 
@@ -35,9 +35,9 @@ class DomainMapper
 end
 
 class MetaInformationMapper
-  include Kartograph::DSL
+  include Cartograph::DSL
 
-  kartograph do
+  cartograph do
     mapping MetaInformation
 
     root_key singular: 'meta', scopes: [:read]

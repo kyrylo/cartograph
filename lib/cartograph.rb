@@ -1,16 +1,16 @@
-require "kartograph/version"
+require "cartograph/version"
 require 'json'
 
-module Kartograph
-  autoload :DSL, 'kartograph/dsl'
-  autoload :Map, 'kartograph/map'
-  autoload :Property, 'kartograph/property'
-  autoload :PropertyCollection, 'kartograph/property_collection'
-  autoload :RootKey, 'kartograph/root_key'
-  autoload :ScopeProxy, 'kartograph/scope_proxy'
+module Cartograph
+  autoload :DSL, 'cartograph/dsl'
+  autoload :Map, 'cartograph/map'
+  autoload :Property, 'cartograph/property'
+  autoload :PropertyCollection, 'cartograph/property_collection'
+  autoload :RootKey, 'cartograph/root_key'
+  autoload :ScopeProxy, 'cartograph/scope_proxy'
 
-  autoload :Artist, 'kartograph/artist'
-  autoload :Sculptor, 'kartograph/sculptor'
+  autoload :Artist, 'cartograph/artist'
+  autoload :Sculptor, 'cartograph/sculptor'
 
   class << self
     attr_accessor :default_dumper
