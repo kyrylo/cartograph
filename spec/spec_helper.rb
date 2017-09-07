@@ -1,5 +1,7 @@
 require 'cartograph'
 
+require 'pry'
+
 Dir['./spec/support/**/*.rb'].each {|f| load f }
 
 RSpec.configure do |config|

@@ -26,25 +26,6 @@ describe Cartograph::Sculptor do
         }.to raise_error(ArgumentError)
       end
     end
-
-    it 'sets the sculpted_object' do
-      hash = {}
-      map = double(Cartograph::Map, mapping: Hash)
-
-      sculptor = Cartograph::Sculptor.new(hash, map)
-      sculptor.sculpted_object = hash
-      expect(sculptor.sculpted_object).to be hash
-    end
-  end
-
-  describe '#sculpted_object' do
-    it 'initializes the mapping class' do
-      hash = {}
-      map = double(Cartograph::Map, mapping: Hash)
-
-      sculptor = Cartograph::Sculptor.new(hash, map)
-      expect(sculptor.sculpted_object).to be_kind_of(Hash)
-    end
   end
 
   describe '#sculpt' do
@@ -80,7 +61,7 @@ describe Cartograph::Sculptor do
         sculptor.sculpted_object = dummy
         sculpted = sculptor.sculpt
 
-        expect(sculpted).to be dummy
+        expect(sculpted).to eq(dummy)
       end
     end
 

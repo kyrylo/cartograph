@@ -1,2 +1,2 @@
-class DummyComment < Struct.new(:id, :text)
+class DummyComment < OpenStruct
 end
