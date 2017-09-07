@@ -1,2 +1,2 @@
-class DummyUser < Struct.new(:id, :name, :comment, :email)
+class DummyUser < OpenStruct
 end

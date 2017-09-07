@@ -11,11 +11,6 @@ module Cartograph
       map.properties
     end
 
-    def sculpted_object
-      # Fallback initialization of the object we're extracting into
-      @sculpted_object ||= map.mapping.new
-    end
-
     # Set this to pass in an object to extract into. Must
     # @param object must be of the same class as the map#mapping
     def sculpted_object=(object)
@@ -25,15 +20,21 @@ module Cartograph
     end
 
     def sculpt(scope = nil)
-      return nil if @object.nil?
+      return unless @object
 
       scoped_properties = scope ? properties.filter_by_scope(scope) : properties
 
-      scoped_properties.each_with_object(sculpted_object) do |property, mutable|
-        setter_method = "#{property.name}="
-        value = property.value_from(object, scope)
-        mutable.send(setter_method, value)
+      attributes = scoped_properties.each_with_object({}) do |property, h|
+        h[property.name] = property.value_from(object, scope)
       end
+
+      return map.mapping.new(attributes) unless @sculpted_object
+
+      attributes.each do |name, val|
+        @sculpted_object[name] = val
+      end
+
+      @sculpted_object
     end
   end
 end

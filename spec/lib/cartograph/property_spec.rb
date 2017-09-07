@@ -151,7 +151,7 @@ describe Cartograph::Property do
 
     context 'for a nested property set' do
       it 'returns an object with the properties set on it' do
-        dummy_class = Struct.new(:id, :name)
+        dummy_class = OpenStruct
 
         nested_property = Cartograph::Property.new(:hello) do
           mapping dummy_class
@@ -171,7 +171,7 @@ describe Cartograph::Property do
       end
 
       it 'returns a collection of objects when set to plural' do
-        dummy_class = Struct.new(:id, :name)
+        dummy_class = OpenStruct
 
         nested_property = Cartograph::Property.new(:hello, plural: true) do
           mapping dummy_class
