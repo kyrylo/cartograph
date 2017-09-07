@@ -4,6 +4,10 @@ module Cartograph
   class Map
     def initialize
       @scope_mutex = Mutex.new
+      @current_scopes = []
+      @cache = nil
+      @cache_calculator = nil
+      @mapping = nil
     end
 
     def property(*args, &block)
@@ -76,7 +80,7 @@ module Cartograph
         end
 
         map.cache self.cache
-        map.cache_key &self.cache_key if self.cache_key
+        map.cache_key(&self.cache_key) if self.cache_key
       end
     end
 

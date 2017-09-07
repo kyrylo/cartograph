@@ -70,7 +70,7 @@ describe Cartograph::Map do
 
       cache_key = Proc.new {}
       map.cache 'hello'
-      map.cache_key &cache_key
+      map.cache_key(&cache_key)
 
       new_map = map.dup
 

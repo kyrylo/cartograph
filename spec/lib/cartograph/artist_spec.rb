@@ -105,8 +105,7 @@ describe Cartograph::Artist do
 
         map.property :foo, scopes: [:read]
 
-        artist = Cartograph::Artist.new(object, map)
-        masterpiece = artist.draw(:read)
+        Cartograph::Artist.new(object, map).draw(:read)
 
         expect(called).to have_received(:call).with(object, :read)
       end

@@ -3,6 +3,8 @@ Cartograph Changelog
 
 ### master
 
+* Fixed Ruby warnings ([#6](https://github.com/kyrylo/cartograph/pull/6))
+
 ### [v1.0.0][v1.0.0] (September 7, 2017)
 
 * Added support for dry-struct
