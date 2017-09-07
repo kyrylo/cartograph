@@ -1,6 +1,6 @@
 require 'forwardable'
 
-module Kartograph
+module Cartograph
   class PropertyCollection
     # Make this collection quack like an array
     # http://words.steveklabnik.com/beware-subclassing-ruby-core-classes

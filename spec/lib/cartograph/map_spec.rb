@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe Kartograph::Map do
-  subject(:map) { Kartograph::Map.new }
+describe Cartograph::Map do
+  subject(:map) { Cartograph::Map.new }
 
   describe '#property' do
     it 'adds a property to the map' do
       map.property :attribute_name, scopes: [:read]
       expect(map.properties.size).to be(1)
-      expect(map.properties.first).to be_kind_of(Kartograph::Property)
+      expect(map.properties.first).to be_kind_of(Cartograph::Property)
     end
 
     context 'defining multiple properties' do
@@ -15,7 +15,7 @@ describe Kartograph::Map do
         map.property :attribute1, :attribute2, scopes: [:read]
 
         expect(map.properties.size).to be(2)
-        expect(map.properties).to all(be_kind_of(Kartograph::Property))
+        expect(map.properties).to all(be_kind_of(Cartograph::Property))
 
         expect(map.properties[0].name).to eq(:attribute1)
         expect(map.properties[0].scopes).to eq([:read])
@@ -29,7 +29,7 @@ describe Kartograph::Map do
   describe '#properties' do
     it 'returns a PropertyCollection object' do
       properties = map.properties
-      expect(properties).to be_kind_of(Kartograph::PropertyCollection)
+      expect(properties).to be_kind_of(Cartograph::PropertyCollection)
     end
   end
 
@@ -46,7 +46,7 @@ describe Kartograph::Map do
       map.root_key singlular: 'test', scopes: [:create]
 
       expect(map.root_keys.size).to be(2)
-      expect(map.root_keys).to all(be_kind_of(Kartograph::RootKey))
+      expect(map.root_keys).to all(be_kind_of(Cartograph::RootKey))
     end
   end
 
@@ -77,7 +77,7 @@ describe Kartograph::Map do
       expect(new_map.properties[0]).to_not be(prop1)
       expect(new_map.properties[1]).to_not be(prop2)
 
-      expect(new_map.properties).to all(be_kind_of(Kartograph::Property))
+      expect(new_map.properties).to all(be_kind_of(Cartograph::Property))
       expect(new_map.properties[0].name).to eq(:name)
       expect(new_map.properties[1].name).to eq(:id)
 
@@ -97,18 +97,18 @@ describe Kartograph::Map do
       expect(map.cache).to be(cacher)
     end
 
-    it 'returns the kartograph cache if set' do
+    it 'returns the cartograph cache if set' do
       cacher = double('cache')
-      Kartograph.default_cache = cacher
+      Cartograph.default_cache = cacher
 
       expect(map.cache).to be(cacher)
     end
 
     it 'goes straight to the object if cache is overridden with false' do
       cacher = double('cache')
-      Kartograph.default_cache = cacher
+      Cartograph.default_cache = cacher
 
-      property = Kartograph::Property.new(:bunk) do
+      property = Cartograph::Property.new(:bunk) do
         cache false
       end
 
@@ -126,9 +126,9 @@ describe Kartograph::Map do
       expect(map.cache_key).to be(cache_key)
     end
 
-    it 'returns the kartograph cache_key if set' do
+    it 'returns the cartograph cache_key if set' do
       cache_key = double('cache key')
-      Kartograph.default_cache_key = cache_key
+      Cartograph.default_cache_key = cache_key
 
       expect(map.cache_key).to be(cache_key)
     end
@@ -136,7 +136,7 @@ describe Kartograph::Map do
 
   describe 'Equality' do
     specify 'duplicated maps are equal to eachother' do
-      map1 = Kartograph::Map.new
+      map1 = Cartograph::Map.new
       map1.property :something, scopes: [:read]
 
       map2 = map1.dup

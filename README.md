@@ -1,14 +1,14 @@
-# Kartograph
+# Cartograph
 
 A Serialization / Deserialization library.
 
-[![Build Status](https://travis-ci.org/digitalocean/kartograph.svg?branch=master)](https://travis-ci.org/digitalocean/kartograph)
+[![Build Status](https://travis-ci.org/digitalocean/cartograph.svg?branch=master)](https://travis-ci.org/digitalocean/cartograph)
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'kartograph'
+    gem 'cartograph'
 
 And then execute:
 
@@ -16,15 +16,15 @@ And then execute:
 
 ## Usage
 
-Kartograph makes it easy to generate and convert JSON. It's intention is to be used for API clients.
+Cartograph makes it easy to generate and convert JSON. It's intention is to be used for API clients.
 
 For example, if you have an object that you would like to convert to JSON for a create request to an API. You would have something similar to this:
 
 ```ruby
 class UserMapping
-  include Kartograph::DSL
+  include Cartograph::DSL
 
-  kartograph do
+  cartograph do
     mapping User # The object we're mapping
 
     property :name, :email, scopes: [:create, :update]
@@ -64,7 +64,7 @@ response = HTTPClient.post("http://something.com/api/users", body: json_for_crea
 created_user = UserMapping.extract_single(response.body, :read)
 ```
 
-Most API's will have a way of retrieving an entire resource collection. For this you can instruct Kartograph to convert a collection.
+Most API's will have a way of retrieving an entire resource collection. For this you can instruct Cartograph to convert a collection.
 
 ```ruby
 response = HTTPClient.get("http://something.com/api/users")
@@ -74,13 +74,13 @@ users = UserMapping.extract_collection(response.body, :read)
 
 ### Getting Harder
 
-Sometimes resources will nest other properties under a key. Kartograph can handle this as well.
+Sometimes resources will nest other properties under a key. Cartograph can handle this as well.
 
 ```ruby
 class UserMapping
-  include Kartograph::DSL
+  include Cartograph::DSL
 
-  kartograph do
+  cartograph do
     mapping User # The object we're mapping
 
     property :name, scopes: [:read]
@@ -99,7 +99,7 @@ Just like the previous examples, when you serialize this. It will include the co
 
 ### Root Keys
 
-Kartograph can also handle the event of root keys in response bodies. For example, if you receive a response with:
+Cartograph can also handle the event of root keys in response bodies. For example, if you receive a response with:
 
 ```json
 { "user": { "id": 123 } }
@@ -110,9 +110,9 @@ You could define a mapping like this:
 
 ```ruby
 class UserMapping
-  include Kartograph::DSL
+  include Cartograph::DSL
 
-  kartograph do
+  cartograph do
     mapping User
     root_key singular: 'user', plural: 'users', scopes: [:read]
     property :id, scopes: [:read]
@@ -133,13 +133,13 @@ The advantage of this is it will only use the root key if there is a scope defin
 
 ### Including other definitions within eachother
 
-Sometimes you might have models that are nested within eachother on responses. Or you simply want to cleanup definitions by separating concerns. Kartograph lets you do this with includes.
+Sometimes you might have models that are nested within eachother on responses. Or you simply want to cleanup definitions by separating concerns. Cartograph lets you do this with includes.
 
 ```ruby
 class UserMapping
-  include Kartograph::DSL
+  include Cartograph::DSL
 
-  kartograph do
+  cartograph do
     mapping User
     property :id, scopes: [:read]
     property :comments, plural: true, include: CommentMapping
@@ -147,9 +147,9 @@ class UserMapping
 end
 
 class CommentMapping
-  include Kartograph::DSL
+  include Cartograph::DSL
 
-  kartograph do
+  cartograph do
     mapping Comment
     property :id, scopes: [:read]
     property :text, scopes: [:read]
@@ -164,9 +164,9 @@ Sometimes adding scopes to all properties can be tedious, to avoid that, you can
 
 ```ruby
 class UserMapping
-  include Kartograph::DSL
+  include Cartograph::DSL
 
-  kartograph do
+  cartograph do
     scoped :read do
       property :name
       property :id
@@ -181,19 +181,19 @@ class UserMapping
 end
 ```
 
-Now when JSON includes comments for a user, it will know how to map the comments using the provided Kartograph definition.
+Now when JSON includes comments for a user, it will know how to map the comments using the provided Cartograph definition.
 
 ---
 
 ### Caching
 
-Kartograph has the option to cache certain serializations, determined by the way you setup the key.
+Cartograph has the option to cache certain serializations, determined by the way you setup the key.
 
 ```ruby
 class UserMapping
-  include Kartograph::DSL
+  include Cartograph::DSL
 
-  kartograph do
+  cartograph do
     cache { Rails.cache } # As long as this respond to #fetch(key_name, options = {}, &block) it will work
     cache_key { |object| object.cache_key }
 
@@ -204,7 +204,7 @@ end
 
 ## Contributing
 
-1. Fork it ( https://github.com/digitaloceancloud/kartograph/fork )
+1. Fork it ( https://github.com/digitaloceancloud/cartograph/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

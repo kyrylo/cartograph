@@ -1,4 +1,4 @@
-require 'kartograph'
+require 'cartograph'
 require 'pp'
 
 class User < Struct.new(:id, :name, :comments)
@@ -8,9 +8,9 @@ class Comment < Struct.new(:id, :text)
 end
 
 class UserMapping
-  include Kartograph::DSL
+  include Cartograph::DSL
 
-  kartograph do
+  cartograph do
     mapping User
 
     property :id, scopes: [:read]

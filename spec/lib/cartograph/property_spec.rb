@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Kartograph::Property do
+describe Cartograph::Property do
   describe '#initialize' do
     it 'initializes with an attribute name and options' do
       name = :hey
       options = { lol: 'whut' }
 
-      property = Kartograph::Property.new(name, options)
+      property = Cartograph::Property.new(name, options)
       expect(property.name).to eq(name)
       expect(property.options).to eq(options)
       expect(property.key).to eq('hey')
@@ -16,7 +16,7 @@ describe Kartograph::Property do
       it 'sets the key' do
         name = :hey
         options = { key: 'Hey' }
-        property = Kartograph::Property.new(name, options)
+        property = Cartograph::Property.new(name, options)
 
         expect(property.key).to eq('Hey')
       end
@@ -24,57 +24,57 @@ describe Kartograph::Property do
 
     context 'with a block' do
       it 'yields a map instance for the property' do
-        expect {|b| Kartograph::Property.new(:hello, &b) }.to yield_with_args(Kartograph::Map.new)
+        expect {|b| Cartograph::Property.new(:hello, &b) }.to yield_with_args(Cartograph::Map.new)
       end
     end
 
     context 'with an include' do
       it 'sets the map to the included mapped class' do
         klass = Class.new do
-          include Kartograph::DSL
-          kartograph do
+          include Cartograph::DSL
+          cartograph do
             property :lol, scopes: [:read]
           end
         end
 
-        property = Kartograph::Property.new(:id, scopes: [:read], include: klass)
-        expect(property.map).to eq(klass.kartograph)
+        property = Cartograph::Property.new(:id, scopes: [:read], include: klass)
+        expect(property.map).to eq(klass.cartograph)
       end
     end
   end
 
   describe '#scopes' do
     it 'returns the scopes that the property is for' do
-      property = Kartograph::Property.new(:name, scopes: [:read, :create])
+      property = Cartograph::Property.new(:name, scopes: [:read, :create])
       expect(property.scopes).to include(:read, :create)
     end
 
     it 'returns an empty array when no scopes are provided' do
-      property = Kartograph::Property.new(:name)
+      property = Cartograph::Property.new(:name)
       expect(property.scopes).to eq( [] )
     end
 
     it 'always casts to an array' do
-      property = Kartograph::Property.new(:name, scopes: :read)
+      property = Cartograph::Property.new(:name, scopes: :read)
       expect(property.scopes).to eq [:read]
     end
   end
 
   describe '#plural?' do
     it 'returns true when set to plural' do
-      property = Kartograph::Property.new(:name, scopes: [:read], plural: true)
+      property = Cartograph::Property.new(:name, scopes: [:read], plural: true)
       expect(property).to be_plural
     end
 
     it 'returns false when not set' do
-      property = Kartograph::Property.new(:name, scopes: [:read])
+      property = Cartograph::Property.new(:name, scopes: [:read])
       expect(property).to_not be_plural
     end
   end
 
   describe '#value_for' do
     it 'returns the value when passed an object' do
-      property = Kartograph::Property.new(:sammy)
+      property = Cartograph::Property.new(:sammy)
       object = double('object', sammy: 'cephalopod')
 
       expect(property.value_for(object)).to eq('cephalopod')
@@ -82,7 +82,7 @@ describe Kartograph::Property do
 
     context 'for a nested property set' do
       it 'returns nested properties' do
-        top_level = Kartograph::Property.new(:sammy) do
+        top_level = Cartograph::Property.new(:sammy) do
           property :cephalopod
         end
 
@@ -94,7 +94,7 @@ describe Kartograph::Property do
 
       context 'when it is plural' do
         it 'returns a pluralized representation' do
-          top_level = Kartograph::Property.new(:sammy, plural: true) do
+          top_level = Cartograph::Property.new(:sammy, plural: true) do
             property :cephalopod
           end
 
@@ -112,7 +112,7 @@ describe Kartograph::Property do
 
       context 'when the value for the root object is nil' do
         it 'returns nil' do
-          top_level = Kartograph::Property.new(:sammy) do
+          top_level = Cartograph::Property.new(:sammy) do
             property :cephalopod
           end
 
@@ -128,13 +128,13 @@ describe Kartograph::Property do
     let(:hash) { { hello: 'world' } }
 
     it 'retrieves the value from a hash for the property' do
-      property = Kartograph::Property.new(:hello)
+      property = Cartograph::Property.new(:hello)
       expect(property.value_from(hash)).to eq('world')
     end
 
     context 'for a nil object' do
       it 'bails and does not try to retrieve' do
-        property = Kartograph::Property.new(:hello)
+        property = Cartograph::Property.new(:hello)
         value = property.value_from(nil)
         expect(value).to be_nil
       end
@@ -144,7 +144,7 @@ describe Kartograph::Property do
       let(:hash) { { 'hello' => 'world' } }
 
       it 'retrieves the value from a hash for the property' do
-        property = Kartograph::Property.new(:hello)
+        property = Cartograph::Property.new(:hello)
         expect(property.value_from(hash)).to eq('world')
       end
     end
@@ -153,7 +153,7 @@ describe Kartograph::Property do
       it 'returns an object with the properties set on it' do
         dummy_class = Struct.new(:id, :name)
 
-        nested_property = Kartograph::Property.new(:hello) do
+        nested_property = Cartograph::Property.new(:hello) do
           mapping dummy_class
           property :id
           property :name
@@ -173,7 +173,7 @@ describe Kartograph::Property do
       it 'returns a collection of objects when set to plural' do
         dummy_class = Struct.new(:id, :name)
 
-        nested_property = Kartograph::Property.new(:hello, plural: true) do
+        nested_property = Cartograph::Property.new(:hello, plural: true) do
           mapping dummy_class
 
           property :id
@@ -205,7 +205,7 @@ describe Kartograph::Property do
         it 'returns an empty array' do
           dummy_class = Struct.new(:id, :name)
 
-          nested_property = Kartograph::Property.new(:hello, plural: true) do
+          nested_property = Cartograph::Property.new(:hello, plural: true) do
             mapping dummy_class
 
             property :id
@@ -223,10 +223,10 @@ describe Kartograph::Property do
 
   describe '#dup' do
     it 'copies the name, options, and map into another property' do
-      instance = Kartograph::Property.new(:id, scopes: [:read])
+      instance = Cartograph::Property.new(:id, scopes: [:read])
       duped = instance.dup
 
-      expect(duped).to be_kind_of(Kartograph::Property)
+      expect(duped).to be_kind_of(Cartograph::Property)
       expect(duped.name).to eq(:id)
       expect(duped.options).to_not be(instance.options)
       expect(duped.options).to eq(instance.options)

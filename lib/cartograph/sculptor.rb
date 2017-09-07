@@ -1,4 +1,4 @@
-module Kartograph
+module Cartograph
   class Sculptor
     attr_reader :object, :map
 

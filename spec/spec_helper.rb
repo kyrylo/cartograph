@@ -1,4 +1,4 @@
-require 'kartograph'
+require 'cartograph'
 
 Dir['./spec/support/**/*.rb'].each {|f| load f }
 
@@ -14,10 +14,10 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
 
   config.after(:each) do
-    Kartograph.default_dumper = JSON
-    Kartograph.default_loader = JSON
-    Kartograph.default_cache = nil
-    Kartograph.default_cache_key = nil
+    Cartograph.default_dumper = JSON
+    Cartograph.default_loader = JSON
+    Cartograph.default_cache = nil
+    Cartograph.default_cache_key = nil
   end
 
 =begin
