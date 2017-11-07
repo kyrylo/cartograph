@@ -3,6 +3,9 @@ Cartograph Changelog
 
 ### master
 
+* Fixed the "possibly useless use of ... in void context" warning
+  ([#8](https://github.com/kyrylo/cartograph/pull/8))
+
 ### [v1.0.1][v1.0.1] (September 8, 2017)
 
 * Fixed Ruby warnings ([#6](https://github.com/kyrylo/cartograph/pull/6))
