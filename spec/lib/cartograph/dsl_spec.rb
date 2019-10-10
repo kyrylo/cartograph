@@ -253,5 +253,16 @@ describe Cartograph::DSL do
         expect(extracted[1].name).to eq(scoped[1][:name])
       end
     end
+
+    context "when the key is a hash" do
+      let(:json) do
+        { name: { first_name: '', last_name: '' } }
+      end
+
+      it "doesn't raise error" do
+        expect { mapped.extract_collection(json.to_json, :read) }
+          .not_to raise_error
+      end
+    end
   end
 end

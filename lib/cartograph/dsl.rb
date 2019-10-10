@@ -79,6 +79,7 @@ module Cartograph
         end
 
         loaded.map do |object|
+          object = { object.first => object[1] } if object.is_a?(Array)
           Sculptor.new(object, @cartograph_map).sculpt(scope)
         end
       end
